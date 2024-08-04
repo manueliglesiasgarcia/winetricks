@@ -13991,6 +13991,27 @@ load_vstools2019()
 
 #----------------------------------------------------------------
 
+w_metadata vstools2022 apps \
+    title="MS Visual Studio Build Tools 2022" \
+    publisher="Microsoft" \
+    year="2022" \
+    media="download"
+
+load_vstools2022()
+{
+    w_call dotnet48
+    w_download https://aka.ms/vs/17/release/installer 8fee87aacbf2aff21a05ece2003a3ceab0578de79076863405693b67b2ad88fe vstools2022.zip
+    w_try_unzip "${W_TMP}/vs_installer_17" "${W_CACHE}/${W_PACKAGE}/vstools2022.zip"
+    w_try "${WINE}" "${W_TMP}"/vs_installer_17/Contents/vs_installer.exe install \
+        --channelId VisualStudio.17.Release \
+        --channelUri "https://aka.ms/vs/17/release/channel" \
+        --productId "Microsoft.VisualStudio.Product.BuildTools" \
+        --add "Microsoft.VisualStudio.Workload.VCTools" \
+        --includeRecommended \
+        ${W_OPT_UNATTENDED:+--quiet}
+}
+
+#----------------------------------------------------------------
 w_metadata webio dlls \
     title="MS Windows Web I/O" \
     publisher="Microsoft" \
